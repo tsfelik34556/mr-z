@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)file:///D:/mr%C3%B3z/mr%C3%B3z.com/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title></title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, sans-serif;
+
+      /* LOCAL BACKGROUND IMAGE */
+      background-image: url("pics/mróz.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+
+      color: #000;
+    }
+
+    h1 {
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      margin-bottom: 200px;
+    }
+
+    #countdown {
+      font-size: 3.1rem;
+      margin-bottom: 30px;
+    }
+
+    #music {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .track {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .track-name {
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      filter: blur(6px);
+      opacity: 0.6;
+      transition: filter 0.8s ease, opacity 0.8s ease;
+    }
+
+    audio {
+      width: 400px;
+    }
+
+    .locked {
+      pointer-events: none;
+      opacity: 0.4;
+    }
+
+    .unlocked .track-name {
+      filter: blur(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <h1></h1>
+
+  <div id="countdown">12d 4h 54m 41s</div>
+
+  <div id="music" class="locked">
+    <div class="track">
+      <div class="track-name">mróz</div>
+      <audio controls="" src="music/mróz.mp3"></audio>
+    </div>
+
+    <div class="track">
+      <div class="track-name">noc</div>
+      <audio controls="" src="music/noc.mp3"></audio>
+    </div>
+
+    <div class="track">
+      <div class="track-name">codzienność</div>
+      <audio controls="" src="music/codzienność.mp3"></audio>
+    </div>
+
+    <div class="track">
+      <div class="track-name">król</div>
+      <audio controls="" src="music/król.mp3"></audio>
+    </div>
+  </div>
+
+  <script>
+    // SET UNLOCK DATE — 30.01.2026
+    const unlockTime = new Date("2026-01-30T00:00:00").getTime();
+
+    const countdown = document.getElementById("countdown");
+    const music = document.getElementById("music");
+
+    function updateTimer() {
+      const now = Date.now();
+      const diff = unlockTime - now;
+
+      if (diff <= 0) {
+        countdown.textContent = "unlocked";
+        music.classList.remove("locked");
+        music.classList.add("unlocked");
+        clearInterval(timer);
+        return;
+      }
+
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / (1000 * 60)) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+
+      countdown.textContent = `${d}d ${h}h ${m}m ${s}s`;
+    }
+
+    const timer = setInterval(updateTimer, 1000);
+    updateTimer();
+  </script>
+
+
+
+</body></html>
